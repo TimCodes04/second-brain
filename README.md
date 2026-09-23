@@ -34,7 +34,7 @@ you › /study
 
 | Command | What it does |
 |---|---|
-| `/setup` | First run: points the system at your vault, scaffolds it, and walks you through the Obsidian settings. `--check` runs a health check |
+| `/setup [vault-path]` | One-command install: writes your config, scaffolds the vault, and lists the Obsidian settings to click. `--check` runs a health check, `--sync-templates` pulls template updates into your vault |
 | `/learn "<topic>"` | Researches a topic and builds a full course: curriculum, lessons, concept notes, flashcards. `--continue <slug>` writes the next batch |
 | `/ingest <pdf-or-url>` | Turns a lecture script or textbook into concept notes, worked examples, and cards, one chapter per run and resumable |
 | `/study` | Daily driver: counts due cards, plans the session, runs it, and writes a study log |
@@ -65,7 +65,7 @@ flowchart LR
     SR["Spaced Repetition plugin<br/>(FSRS scheduling)"]
     CC -- "writes notes & cards<br/>by the schema" --> N
     N -- "due-card state,<br/>mastery, logs" --> CC
-    SR -- "stores review state as<br/>&lt;!--SR:…--&gt; comments" --> N
+    SR -- "stores review state as<br/>comments in card files" --> N
     You((You)) -- "/learn /study /quiz …" --> CC
     You -- "daily card review<br/>(desktop or phone)" --> SR
 ```
@@ -81,7 +81,7 @@ flowchart LR
 | **Claude Code** | Needs a paid Claude plan (Pro, Max, Team, or Enterprise) *or* an Anthropic Console account with API billing. The free claude.ai plan does not include Claude Code. |
 | **Obsidian** | 1.9.10 or newer (for the Bases core plugin). Free. |
 | **OS** | macOS 13+, Windows 10 (1809+), or Linux (Ubuntu 20.04+, Debian 10+). Windows works natively or through WSL. |
-| **git** | To clone this repo (and, optionally, to version your vault). |
+| **git** | To clone this repo (and, optionally, to version your vault). On Windows, install [Git for Windows](https://git-scm.com/downloads/win). |
 | Optional | Python 3 with `numpy` and `matplotlib`, for generated figures and `/project`. |
 
 ## Installation
@@ -128,7 +128,7 @@ git clone https://github.com/TimCodes04/second-brain.git && cd second-brain
 claude "/setup ~/Documents/SecondBrain"
 ```
 
-Claude Code first asks whether you trust this folder. Say yes: that's what loads the skills. `/setup` then:
+Claude Code first asks whether you trust this folder. Say yes, because the repo's settings only apply in trusted folders. During setup you'll approve a few actions. One of them is writing `.claude/settings.local.json`: Claude Code always asks before an agent changes its own settings, and that file gives it access to your vault folder. `/setup` then:
 
 1. Confirms your settings in one message: the vault path, an optional **sources folder** (your PDFs and lecture scripts), the **content language** (default English), and whether to keep a git history of your vault (recommended). Reply `ok` to accept the defaults.
 2. Writes them to **`config.env`**, your personal, gitignored config (see [Configuration](#configuration)).
@@ -278,7 +278,7 @@ Details, the threat model, and how to report a vulnerability: **[SECURITY.md](SE
 
 ```
 .
-├── CLAUDE.md                 # agent instructions & hard rules (loaded every session)
+├── CLAUDE.md                 # agent instructions & hard rules (loaded every session; imports config.env)
 ├── config.env.example        # every setting, documented; /setup turns it into your gitignored config.env
 ├── .claude/
 │   ├── settings.json         # shared permissions (hardened defaults)
@@ -288,7 +288,9 @@ Details, the threat model, and how to report a vulnerability: **[SECURITY.md](SE
 │   ├── pedagogy.md           # the learning-science rules
 │   └── setup.md              # Obsidian UI checklist
 ├── templates/                # note skeletons (mirrored into the vault)
-└── scaffold/                 # one-time vault files copied by /setup (Home, Inbox, dashboards, …)
+├── scaffold/                 # one-time vault files copied by /setup (Home, Inbox, dashboards, …)
+├── SECURITY.md               # threat model & vulnerability reporting
+└── LICENSE                   # MIT
 ```
 
 ## Contributing

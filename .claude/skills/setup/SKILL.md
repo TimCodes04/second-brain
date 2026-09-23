@@ -32,9 +32,11 @@ Validate before writing. Expand `~` to an absolute path. `VAULT_PATH` must not b
 
 Both files are gitignored. Never write these values into tracked files.
 
+Claude Code always asks the user before an agent writes its own settings file, so expect an approval prompt for `settings.local.json`. That's normal; mention it in one line. If the write is refused, never work around it: show the exact JSON, tell the user to save it as `<repo>/.claude/settings.local.json`, and continue with the rest of setup.
+
 ## 3. Scaffold the vault (batched)
 
-Use **one** shell command so the user approves once:
+Use **one** shell command so the user approves once. If it is refused, fall back to writing the files individually:
 - `mkdir -p` the folders `atlas/maps`, `atlas/bases`, `concepts`, `courses`, `sources`, `palace`, `projects`, `log/study`, `log/briefs`, `templates`.
 - Copy without overwriting (`cp -n` or an equivalent): `<repo>/scaffold/*` into the vault (`Home.md`, `Inbox.md`, `Profile.md`, `palace/_Palace Guide.md`, `log/inbox-archive.md`, `atlas/bases/*.base`), `scaffold/gitignore` → `<vault>/.gitignore` (only if absent), and `<repo>/templates/*.md` → `<vault>/templates/`.
 - Fill `{{YYYY-MM-DD}}` with today and `{{repo_path}}` with `<repo>`, **only in the files just created**. Never touch pre-existing files, or the placeholders inside `templates/`.
