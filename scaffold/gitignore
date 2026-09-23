@@ -1,0 +1,18 @@
+# Vault .gitignore — copied to <vault>/.gitignore by /setup (only if absent).
+# Keep any remote for this vault PRIVATE: notes, Profile.md and quiz logs are personal.
+
+# Obsidian UI churn
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# OS / tooling noise
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+
+# Some community plugins store API keys or tokens in their data.json.
+# If you install one that does, ignore its settings file, e.g.:
+# .obsidian/plugins/<plugin-id>/data.json

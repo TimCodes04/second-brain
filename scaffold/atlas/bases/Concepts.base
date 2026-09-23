@@ -1,0 +1,32 @@
+filters:
+  and:
+    - type == "concept"
+    - '!file.inFolder("templates")'
+properties:
+  note.domains:
+    displayName: Domains
+  note.mastery:
+    displayName: Mastery
+  note.courses:
+    displayName: Courses
+views:
+  - type: table
+    name: Weak concepts
+    filters:
+      and:
+        - "!mastery.isEmpty()"
+        - mastery < 60
+    order:
+      - file.name
+      - domains
+      - mastery
+    sort:
+      - property: mastery
+        direction: ASC
+  - type: table
+    name: All concepts
+    order:
+      - file.name
+      - domains
+      - courses
+      - mastery

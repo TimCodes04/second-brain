@@ -1,0 +1,8 @@
+# Personal, per-machine configuration (written by /setup) — never commit
+config.env
+CLAUDE.local.md
+.claude/settings.local.json
+
+# OS / tooling noise
+.DS_Store
+__pycache__/

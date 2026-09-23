@@ -1,0 +1,35 @@
+filters:
+  and:
+    - type == "course"
+    - '!file.inFolder("templates")'
+formulas:
+  progress: if(lessons_total, ((lessons_done * 100) / lessons_total).round(0) + "%", "—")
+properties:
+  note.status:
+    displayName: Status
+  note.depth:
+    displayName: Depth
+  formula.progress:
+    displayName: Progress
+  note.target_date:
+    displayName: Target
+views:
+  - type: table
+    name: Active
+    filters:
+      and:
+        - status == "active"
+    order:
+      - file.name
+      - depth
+      - formula.progress
+      - target_date
+  - type: table
+    name: All courses
+    order:
+      - file.name
+      - status
+      - depth
+      - formula.progress
+      - started
+      - target_date

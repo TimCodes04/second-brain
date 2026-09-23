@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch"
+    ],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.netrc)",
+      "Read(//**/.env)",
+      "Read(//**/.env.*)"
+    ]
+  }
+}

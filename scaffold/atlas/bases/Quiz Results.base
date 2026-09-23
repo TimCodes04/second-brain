@@ -1,0 +1,27 @@
+filters:
+  and:
+    - 'type == "quiz"'
+    - '!file.inFolder("templates")'
+properties:
+  note.course_slug:
+    displayName: Course
+  note.date:
+    displayName: Date
+  note.score:
+    displayName: Score
+  note.format:
+    displayName: Format
+views:
+  - type: table
+    name: Recent quizzes
+    order:
+      - file.name
+      - note.course_slug
+      - note.date
+      - note.score
+      - note.format
+    sort:
+      - property: note.date
+        direction: DESC
+    summaries:
+      note.score: Average

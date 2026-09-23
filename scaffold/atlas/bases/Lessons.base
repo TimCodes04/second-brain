@@ -1,0 +1,53 @@
+filters:
+  and:
+    - type == "lesson"
+    - '!file.inFolder("templates")'
+properties:
+  note.course_slug:
+    displayName: Course
+  note.order:
+    displayName: "#"
+  note.status:
+    displayName: Status
+  note.mastery:
+    displayName: Mastery
+  note.last_quizzed:
+    displayName: Last quizzed
+views:
+  - type: table
+    name: Weak spots
+    filters:
+      and:
+        - status == "quizzed"
+        - mastery < 60
+    order:
+      - file.name
+      - course_slug
+      - mastery
+      - last_quizzed
+    sort:
+      - property: mastery
+        direction: ASC
+  - type: table
+    name: Up next
+    filters:
+      and:
+        - status == "unread"
+    order:
+      - file.name
+      - course_slug
+      - order
+    sort:
+      - property: course_slug
+        direction: ASC
+      - property: order
+        direction: ASC
+  - type: table
+    name: All lessons
+    order:
+      - file.name
+      - course_slug
+      - order
+      - status
+      - mastery
+      - last_quizzed
